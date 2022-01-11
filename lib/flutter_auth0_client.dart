@@ -32,9 +32,16 @@ class FlutterAuth0Client {
   }
 
   static Future<Auth0Credentials> login(
-      {clientId = String, domain = String, scope = String}) async {
-    final rawJson = await _channel.invokeMethod(
-        'login', {"clientId": clientId, "domain": domain, "scope": scope});
+      {String? clientId,
+      String? domain,
+      String? scope,
+      String? audience}) async {
+    final rawJson = await _channel.invokeMethod('login', {
+      "clientId": clientId,
+      "domain": domain,
+      "scope": scope,
+      "audience": audience
+    });
     final decodedJson = jsonDecode(rawJson);
     return Auth0Credentials.fromJSON(decodedJson);
   }

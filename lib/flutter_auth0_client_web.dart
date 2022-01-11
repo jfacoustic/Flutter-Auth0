@@ -54,10 +54,11 @@ class FlutterAuth0ClientWeb {
   Future<String> login(dynamic args) async {
     try {
       final client = await getAuth0Client(
-          clientId: args["clientId"], domain: args["domain"]);
-      await promiseToFuture(client.loginWithPopup(scope: args["scope"]));
-      final token = await promiseToFuture(client.getTokenSilently(
-          detailedResponse: true, scope: args["scope"]));
+          clientId: args["clientId"],
+          domain: args["domain"],
+          audience: args["audience"]);
+      await promiseToFuture(client.loginWithPopup());
+      final token = await promiseToFuture(client.getTokenSilently());
       return '{"accessToken": "$token"}';
     } catch (e) {
       return "{}";
@@ -69,9 +70,13 @@ class FlutterAuth0ClientWeb {
     return result;
   }
 
-  Future<dynamic> getAuth0Client({clientId = String, domain = String}) async {
-    final promise = await createAuth0Client(
-        Auth0ClientOptions(client_id: clientId, domain: domain));
+  Future<dynamic> getAuth0Client(
+      {String? clientId,
+      String? domain,
+      String? audience,
+      String? scope}) async {
+    final promise = await createAuth0Client(Auth0ClientOptions(
+        client_id: clientId, domain: domain, audience: audience));
     final future = promiseToFuture(promise);
     final result = await future;
     return result;
@@ -81,9 +86,12 @@ class FlutterAuth0ClientWeb {
 @JS()
 @anonymous
 class Auth0ClientOptions {
-  external factory Auth0ClientOptions({client_id, domain});
-  external dynamic get client_id;
-  external dynamic get domain;
+  external factory Auth0ClientOptions(
+      {String? client_id, String? domain, String? audience, String? scope});
+  external String? get client_id;
+  external String? get domain;
+  external String? get audience;
+  external String? get scope;
 }
 
 @JS('createAuth0Client')
