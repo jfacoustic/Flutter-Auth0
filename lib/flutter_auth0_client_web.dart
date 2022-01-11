@@ -87,7 +87,12 @@ class FlutterAuth0ClientWeb {
 @anonymous
 class Auth0ClientOptions {
   external factory Auth0ClientOptions(
-      {String? client_id, String? domain, String? audience, String? scope});
+      // ignore: non_constant_identifier_names
+      {String? client_id,
+      String? domain,
+      String? audience,
+      String? scope});
+  // ignore: non_constant_identifier_names
   external String? get client_id;
   external String? get domain;
   external String? get audience;
