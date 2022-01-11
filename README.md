@@ -4,27 +4,51 @@ Unofficial Auth0 SDK for flutter.
 
 ## Getting Started
 
-add flutter_auth0 to pubspec.
-
 ### iOS:
 
-0. Pod install in iOS directory
-1. Create Auth0.plist in Runner
-2. Fill in Auth0.plist with the following:
+1. Pod install in iOS directory
+2. Add the following to info.plist:
 
 ```plist
-<!-- Auth0.plist -->
-
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>ClientId</key>
-  <string>{Your Client Id}</string>
-  <key>Domain</key>
-  <string>{Your Auth0 Domain}</string>
-</dict>
-</plist>
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleTypeRole</key>
+        <string>None</string>
+        <key>CFBundleURLName</key>
+        <string>auth0</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+        </array>
+    </dict>
+</array>
 ```
 
-3.  Add Auth0 Callback
+### Android
+TODO
+
+### Web
+Add the following to index.html:
+
+```html
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.12/auth0-spa-js.production.js"></script>
+```
+
+Note: Web only returns an access_token.
+
+### Login:
+
+
+```dart
+final Auth0Credentials credentials = await FlutterAuth0.login(
+    clientId: "{YOUR AUTH0 CLIENT ID}",
+    domain: "{YOUR AUTH0 DOMAIN}",
+    scope: "{SCOPES}"
+);
+```
+
+Launches popup window on web.  TODO: Add redirect functionality in web
+
+### Logout:
+TODO

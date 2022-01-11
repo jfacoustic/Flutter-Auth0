@@ -16,7 +16,6 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
   s.dependency 'Auth0', '~> 1.38.0'
-  s.dependency 'SwiftyJSON', '~> 4.0'
 
   s.platform = :ios, '9.0'
 

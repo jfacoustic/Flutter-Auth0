@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_auth0_client/flutter_auth0.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_auth0/flutter_auth0.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('flutter_auth0');
