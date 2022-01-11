@@ -1,4 +1,4 @@
-name: flutter_auth0_example
+name: flutter_auth0_multiplatform
 description: Demonstrates how to use the flutter_auth0 plugin.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -9,7 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_auth0:
+  flutter_auth0_client:
     path: ../
 
   cupertino_icons: ^1.0.2

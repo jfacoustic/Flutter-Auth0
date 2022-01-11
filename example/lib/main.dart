@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth0/flutter_auth0.dart';
+import 'package:flutter_auth0_client/flutter_auth0.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
