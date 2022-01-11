@@ -4,7 +4,7 @@ import Auth0
 
 public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "flutter_auth0", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "flutter_auth0_client", binaryMessenger: registrar.messenger())
     let instance = SwiftFlutterAuth0ClientPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }

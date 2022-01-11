@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth0_client/flutter_auth0.dart';
+import 'package:flutter_auth0_client/flutter_auth0_client.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
             children: [
               ElevatedButton(
                   onPressed: () async {
-                    final credentials = await FlutterAuth0.login(
+                    final credentials = await FlutterAuth0Client.login(
                         clientId: dotenv.env["AUTH0_CLIENT_ID"],
                         domain: dotenv.env["AUTH0_DOMAIN"],
                         scope: "openid offline_access");

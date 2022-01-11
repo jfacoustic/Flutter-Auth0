@@ -1,4 +1,4 @@
-group 'com.example.flutter_auth0'
+group 'com.jfacoustic.flutter_auth0_client'
 version '1.0-SNAPSHOT'
 
 buildscript {

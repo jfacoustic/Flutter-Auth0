@@ -18,7 +18,7 @@ external void log(Object obj);
 class FlutterAuth0ClientWeb {
   static void registerWith(Registrar registrar) {
     final MethodChannel channel = MethodChannel(
-      'flutter_auth0',
+      'flutter_auth0_client',
       const StandardMethodCodec(),
       registrar,
     );

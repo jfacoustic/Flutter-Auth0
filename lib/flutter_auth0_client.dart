@@ -24,7 +24,7 @@ class Auth0Credentials {
 }
 
 class FlutterAuth0Client {
-  static const MethodChannel _channel = MethodChannel('flutter_auth0');
+  static const MethodChannel _channel = MethodChannel('flutter_auth0_client');
 
   static Future<String?> get platformVersion async {
     final String? version = await _channel.invokeMethod('getPlatformVersion');

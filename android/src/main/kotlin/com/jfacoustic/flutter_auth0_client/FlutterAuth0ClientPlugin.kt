@@ -17,7 +17,7 @@ class FlutterAuth0ClientPlugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_auth0")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_auth0_client")
     channel.setMethodCallHandler(this)
   }
 
