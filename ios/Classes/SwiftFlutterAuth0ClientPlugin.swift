@@ -1,12 +1,11 @@
 import Flutter
 import UIKit
 import Auth0
-import SwiftyJSON
 
-public class SwiftFlutterAuth0Plugin: NSObject, FlutterPlugin {
+public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "flutter_auth0", binaryMessenger: registrar.messenger())
-    let instance = SwiftFlutterAuth0Plugin()
+    let channel = FlutterMethodChannel(name: "flutter_auth0_client", binaryMessenger: registrar.messenger())
+    let instance = SwiftFlutterAuth0ClientPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

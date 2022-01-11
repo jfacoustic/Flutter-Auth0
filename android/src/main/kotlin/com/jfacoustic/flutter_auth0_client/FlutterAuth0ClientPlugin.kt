@@ -1,4 +1,4 @@
-package com.example.flutter_auth0
+package com.jfacoustic.flutter_auth0_client
 
 import androidx.annotation.NonNull
 
@@ -8,8 +8,8 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
-/** FlutterAuth0Plugin */
-class FlutterAuth0Plugin: FlutterPlugin, MethodCallHandler {
+/** FlutterAuth0ClientPlugin */
+class FlutterAuth0ClientPlugin: FlutterPlugin, MethodCallHandler {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -17,7 +17,7 @@ class FlutterAuth0Plugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_auth0")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_auth0_client")
     channel.setMethodCallHandler(this)
   }
 

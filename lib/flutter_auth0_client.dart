@@ -23,8 +23,8 @@ class Auth0Credentials {
         recoveryCode = json['recoveryCode'];
 }
 
-class FlutterAuth0 {
-  static const MethodChannel _channel = MethodChannel('flutter_auth0');
+class FlutterAuth0Client {
+  static const MethodChannel _channel = MethodChannel('flutter_auth0_client');
 
   static Future<String?> get platformVersion async {
     final String? version = await _channel.invokeMethod('getPlatformVersion');

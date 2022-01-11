@@ -14,16 +14,16 @@ import 'package:js/js.dart';
 @JS('console.log')
 external void log(Object obj);
 
-/// A web implementation of the FlutterAuth0 plugin.
-class FlutterAuth0Web {
+/// A web implementation of the FlutterAuth0Client plugin.
+class FlutterAuth0ClientWeb {
   static void registerWith(Registrar registrar) {
     final MethodChannel channel = MethodChannel(
-      'flutter_auth0',
+      'flutter_auth0_client',
       const StandardMethodCodec(),
       registrar,
     );
 
-    final pluginInstance = FlutterAuth0Web();
+    final pluginInstance = FlutterAuth0ClientWeb();
     channel.setMethodCallHandler(pluginInstance.handleMethodCall);
   }
 

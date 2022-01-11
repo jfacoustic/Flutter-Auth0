@@ -1,6 +1,6 @@
 name: flutter_auth0_client
 description: Auth0 Client for iOS, Android, and Web.
-version: 0.0.1
+version: 0.0.2
 repository: https://github.com/jfacoustic/Flutter-Auth0
 
 environment:
@@ -31,13 +31,13 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.flutter_auth0
-        pluginClass: FlutterAuth0Plugin
+        package: com.jfacoustic.flutter_auth0_client
+        pluginClass: FlutterAuth0ClientPlugin
       ios:
-        pluginClass: FlutterAuth0Plugin
+        pluginClass: FlutterAuth0ClientPlugin
       web:
-        pluginClass: FlutterAuth0Web
-        fileName: flutter_auth0_web.dart
+        pluginClass: FlutterAuth0ClientWeb
+        fileName: flutter_auth0_client_web.dart
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
