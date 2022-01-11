@@ -1,3 +1,8 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* Initial Release
+* Basic Login
+
+## 0.0.2
+
+* Fixes iOS compilation errors due to changing package name. 
