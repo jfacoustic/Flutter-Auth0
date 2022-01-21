@@ -5,14 +5,10 @@ import 'dart:convert';
 // package as the core of your plugin.
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html show window;
-import 'dart:js_util';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-import 'package:js/js.dart';
-
-@JS('console.log')
-external void log(Object obj);
+import 'package:auth0_spa_dart/auth0_spa_dart.dart';
 
 /// A web implementation of the FlutterAuth0Client plugin.
 class FlutterAuth0ClientWeb {
@@ -52,57 +48,21 @@ class FlutterAuth0ClientWeb {
   }
 
   Future<String> login(dynamic args) async {
-    try {
-      final client = await getAuth0Client(
-          clientId: args["clientId"],
-          domain: args["domain"],
-          audience: args["audience"]);
-      await promiseToFuture(client.loginWithPopup());
-      final token = await promiseToFuture(client.getTokenSilently());
-      return '{"accessToken": "$token"}';
-    } catch (e) {
-      return "{}";
+    final client = await createAuth0Client(
+        clientId: args['clientId'],
+        domain: args['domain'],
+        useRefreshTokens: true,
+        cacheLocation: "localstorage");
+    final isAuthenticated = await client.isAuthenticated();
+    if (!isAuthenticated) {
+      await client.loginWithPopup();
     }
-  }
-
-  Future<bool> isAuthenticated(dynamic client) async {
-    final result = await promiseToFuture(client.isAuthenticated());
-    return result;
-  }
-
-  Future<dynamic> getAuth0Client(
-      {String? clientId,
-      String? domain,
-      String? audience,
-      String? scope}) async {
-    final promise = await createAuth0Client(Auth0ClientOptions(
-        client_id: clientId, domain: domain, audience: audience));
-    final future = promiseToFuture(promise);
-    final result = await future;
-    return result;
+    final token = await client.getTokenSilently(detailedResponse: true);
+    Map<String, dynamic> tokenMap = {
+      'accessToken': token.accessToken,
+      'idToken': token.idToken,
+      'expiresIn': token.expiresIn
+    };
+    return jsonEncode(tokenMap);
   }
 }
-
-@JS()
-@anonymous
-class Auth0ClientOptions {
-  external factory Auth0ClientOptions(
-      {String? client_id, String? domain, String? audience, String? scope});
-  external String? get client_id;
-  external String? get domain;
-  external String? get audience;
-  external String? get scope;
-}
-
-@JS('createAuth0Client')
-external Future<dynamic> createAuth0Client(Auth0ClientOptions opts);
-
-Map<String, dynamic> decodeJSON(Object obj) {
-  return jsonDecode(jsonStringify(obj));
-}
-
-@JS("JSON.stringify")
-external String jsonStringify(Object obj);
-
-@JS("auth0")
-external dynamic auth0;
