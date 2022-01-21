@@ -1,6 +1,10 @@
+## 0.0.4
+
+- Use refresh tokens.
+
 ## 0.0.3
 
-- Refactor of web project to use refresh tokens.
+- Allows user to pass audience into login for web.
 
 ## 0.0.2
 
