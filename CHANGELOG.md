@@ -1,3 +1,9 @@
+## 0.0.5
+
+- Update to latest web package
+- Adds audience and scope to loginWithPopup()
+- Adds audience to getTokenSilently()
+
 ## 0.0.4
 
 - Use refresh tokens.

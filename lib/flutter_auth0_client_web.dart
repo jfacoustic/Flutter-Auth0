@@ -55,9 +55,11 @@ class FlutterAuth0ClientWeb {
         cacheLocation: "localstorage");
     final isAuthenticated = await client.isAuthenticated();
     if (!isAuthenticated) {
-      await client.loginWithPopup();
+      await client.loginWithPopup(
+          scope: args['scope'], audience: args['audience']);
     }
-    final token = await client.getTokenSilently(detailedResponse: true);
+    final token = await client.getTokenSilently(
+        detailedResponse: true, audience: args['audience']);
     Map<String, dynamic> tokenMap = {
       'accessToken': token.accessToken,
       'idToken': token.idToken,
