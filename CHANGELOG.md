@@ -1,3 +1,6 @@
+## 0.0.6
+- add audience to iOS
+
 ## 0.0.5
 
 - Update to latest web package
