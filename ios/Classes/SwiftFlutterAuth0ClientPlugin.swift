@@ -13,12 +13,12 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
     if(call.method == "getPlatformVersion") {
       result("iOS " + UIDevice.current.systemVersion)
     } else if(call.method == "login") {
-      let clientId = (call.arguments as! [String: String])["clientId"] ?? ""
-      let domain = (call.arguments as! [String: String])["domain"] ?? ""
-      let scope = (call.arguments as! [String: String])["scope"] ?? ""
-      let audience = (call.arguments as! [String: String])["scope"] ?? ""
+      let clientId = (call.arguments as! [String: String])["clientId"]
+      let domain = (call.arguments as! [String: String])["domain"]
+      let scope = (call.arguments as! [String: String])["scope"]
+      let audience = (call.arguments as! [String: String])["audience"]
 
-      login(flutterResult: result, clientId: clientId, domain: domain, scope: scope, audience: audience)
+      login(flutterResult: result, clientId: clientId!, domain: domain!, scope: scope ?? "", audience: audience ?? "")
     } else {
       print("METHOD DOES NOT EXIST")
     }

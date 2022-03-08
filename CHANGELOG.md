@@ -1,3 +1,6 @@
+## 0.0.7
+- Fix null checking bug
+
 ## 0.0.6
 - add audience to iOS
 
