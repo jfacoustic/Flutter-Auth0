@@ -1,3 +1,15 @@
+## 0.0.7
+- Fix null checking bug
+
+## 0.0.6
+- add audience to iOS
+
+## 0.0.5
+
+- Update to latest web package
+- Adds audience and scope to loginWithPopup()
+- Adds audience to getTokenSilently()
+
 ## 0.0.4
 
 - Use refresh tokens.

@@ -16,7 +16,9 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
       let clientId = (call.arguments as! [String: String])["clientId"]
       let domain = (call.arguments as! [String: String])["domain"]
       let scope = (call.arguments as! [String: String])["scope"]
-      login(flutterResult: result, clientId: clientId!, domain: domain!, scope: scope!)
+      let audience = (call.arguments as! [String: String])["audience"]
+
+      login(flutterResult: result, clientId: clientId!, domain: domain!, scope: scope ?? "", audience: audience ?? "")
     } else {
       print("METHOD DOES NOT EXIST")
     }
@@ -32,8 +34,8 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
     var recoveryCode: String?
   }
   
-  public func login(flutterResult: @escaping FlutterResult, clientId: String, domain: String, scope: String) {
-    Auth0.webAuth(clientId: clientId, domain: domain).scope(scope).start {
+  public func login(flutterResult: @escaping FlutterResult, clientId: String, domain: String, scope: String, audience: String) {
+    Auth0.webAuth(clientId: clientId, domain: domain).scope(scope).audience(audience).start {
       result in
       switch result {
       case .failure(let error):
