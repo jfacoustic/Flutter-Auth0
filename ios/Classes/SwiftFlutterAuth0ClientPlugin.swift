@@ -51,7 +51,7 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
       result in
       switch result {
       case .failure(let error):
-        flutterResult(error)
+        flutterResult(FlutterError(code: "LoginFailure", message: "Failure Logging In with Auth0", details: "User cancelled Logging In"))
       case .success(let credentials):
         do {
           let data = Auth0Credentials(
@@ -62,7 +62,7 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
           let result = String(data: json, encoding: .utf8)!
           flutterResult(result)
         } catch {
-          flutterResult("ERROR")
+          flutterResult(FlutterError(code: "LoginFailure", message: "Failure Logging In With Auth0", details: "Error encoding credentials"))
         }
       }
     }
