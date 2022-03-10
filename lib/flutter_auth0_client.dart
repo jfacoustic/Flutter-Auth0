@@ -26,27 +26,33 @@ class Auth0Credentials {
 class FlutterAuth0Client {
   static const MethodChannel _channel = MethodChannel('flutter_auth0_client');
 
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+  final String clientId;
+  final String domain;
+  final String scope;
+  final String audience;
+  final bool useEphemeral;
 
-  static Future<Auth0Credentials> login(
-      {String? clientId,
-      String? domain,
-      String? scope,
-      String? audience}) async {
+  FlutterAuth0Client(
+      {required this.clientId,
+      required this.domain,
+      this.scope = "",
+      this.audience = "",
+      this.useEphemeral = false});
+
+  Future<Auth0Credentials> login() async {
     final rawJson = await _channel.invokeMethod('login', {
       "clientId": clientId,
       "domain": domain,
       "scope": scope,
-      "audience": audience
+      "audience": audience,
+      "useEphemeral": useEphemeral
     });
     final decodedJson = jsonDecode(rawJson);
     return Auth0Credentials.fromJSON(decodedJson);
   }
 
-  static Future<dynamic> logout() async {
-    return await _channel.invokeListMethod('logout');
+  Future<dynamic> logout() async {
+    return await _channel
+        .invokeListMethod('logout', {"clientId": clientId, "domain": domain});
   }
 }

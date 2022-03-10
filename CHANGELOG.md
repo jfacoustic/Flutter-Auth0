@@ -1,3 +1,11 @@
+## 0.1.1
+- Handle login cancellation iOS
+
+## 0.1.0
+- Breaking changes -- using instance class instead of static methods
+- Logout method
+- Allows for ephemeral login in iOS
+
 ## 0.0.7
 - Fix null checking bug
 

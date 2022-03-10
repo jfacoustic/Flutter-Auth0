@@ -24,6 +24,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final client = FlutterAuth0Client(
+        clientId: dotenv.env["AUTH0_CLIENT_ID"]!,
+        domain: dotenv.env["AUTH0_DOMAIN"]!,
+        scope: "openid offline_access");
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -34,10 +38,7 @@ class _MyAppState extends State<MyApp> {
             children: [
               ElevatedButton(
                   onPressed: () async {
-                    final credentials = await FlutterAuth0Client.login(
-                        clientId: dotenv.env["AUTH0_CLIENT_ID"],
-                        domain: dotenv.env["AUTH0_DOMAIN"],
-                        scope: "openid offline_access");
+                    final credentials = await client.login();
                     setState(() {
                       _credentials = credentials;
                     });

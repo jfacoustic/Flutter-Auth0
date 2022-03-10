@@ -10,17 +10,25 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    if(call.method == "getPlatformVersion") {
-      result("iOS " + UIDevice.current.systemVersion)
-    } else if(call.method == "login") {
-      let clientId = (call.arguments as! [String: String])["clientId"]
-      let domain = (call.arguments as! [String: String])["domain"]
-      let scope = (call.arguments as! [String: String])["scope"]
-      let audience = (call.arguments as! [String: String])["audience"]
-
-      login(flutterResult: result, clientId: clientId!, domain: domain!, scope: scope ?? "", audience: audience ?? "")
-    } else {
-      print("METHOD DOES NOT EXIST")
+    switch(call.method) {
+      case "getPlatformVersion":
+        result("iOS " + UIDevice.current.systemVersion)
+      case "login":
+        let args = call.arguments as! [String: Any]
+        let clientId = args["clientId"] as! String
+        let domain = args["domain"] as! String
+        let scope = args["scope"] as! String
+        let audience = args["audience"] as! String
+        let useEphemeral = args["useEphemeral"] as! Bool
+      
+        login(flutterResult: result, clientId: clientId, domain: domain, scope: scope, audience: audience, useEphemeral: useEphemeral)
+      case "logout":
+        let args = call.arguments as! [String: Any]
+        let clientId = args["clientId"] as! String
+        let domain = args["domain"] as! String
+        logout(flutterResult: result, clientId: clientId, domain: domain)
+      default:
+          print("Method does not exist")
     }
   }
   
@@ -34,12 +42,16 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
     var recoveryCode: String?
   }
   
-  public func login(flutterResult: @escaping FlutterResult, clientId: String, domain: String, scope: String, audience: String) {
-    Auth0.webAuth(clientId: clientId, domain: domain).scope(scope).audience(audience).start {
+  public func login(flutterResult: @escaping FlutterResult, clientId: String, domain: String, scope: String, audience: String, useEphemeral: Bool = false) {
+    var auth = Auth0.webAuth(clientId: clientId, domain: domain).scope(scope).audience(audience)
+    if(useEphemeral)  {
+      auth = auth.useEphemeralSession()
+    }
+    auth.start {
       result in
       switch result {
       case .failure(let error):
-        flutterResult(error)
+        flutterResult(FlutterError(code: "LoginFailure", message: "Failure Logging In with Auth0", details: "User cancelled Logging In"))
       case .success(let credentials):
         do {
           let data = Auth0Credentials(
@@ -50,16 +62,17 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
           let result = String(data: json, encoding: .utf8)!
           flutterResult(result)
         } catch {
-          flutterResult("ERROR")
+          flutterResult(FlutterError(code: "LoginFailure", message: "Failure Logging In With Auth0", details: "Error encoding credentials"))
         }
       }
     }
   }
   
-  public func logout(_call: FlutterMethodCall, result: @escaping FlutterResult) {
-    Auth0.webAuth()
-      .clearSession(federated: false) { result in
-        print(result)
-      }
+  public func logout(flutterResult: @escaping FlutterResult, clientId: String, domain: String) {
+    Auth0.webAuth(clientId: clientId, domain: domain)
+    .clearSession(federated: false) { result in
+      print(result)
+      flutterResult(result)
+    }
   }
 }
