@@ -1,6 +1,6 @@
 name: flutter_auth0_client
 description: Auth0 Client for iOS, Android, and Web.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/jfacoustic/Flutter-Auth0
 
 environment:
