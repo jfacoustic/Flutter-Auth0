@@ -30,19 +30,22 @@ class FlutterAuth0Client {
   final String domain;
   final String scope;
   final String audience;
+  final bool useEphemeral;
 
   FlutterAuth0Client(
       {required this.clientId,
       required this.domain,
       this.scope = "",
-      this.audience = ""});
+      this.audience = "",
+      this.useEphemeral = false});
 
   Future<Auth0Credentials> login() async {
     final rawJson = await _channel.invokeMethod('login', {
       "clientId": clientId,
       "domain": domain,
       "scope": scope,
-      "audience": audience
+      "audience": audience,
+      "useEphemeral": useEphemeral
     });
     final decodedJson = jsonDecode(rawJson);
     return Auth0Credentials.fromJSON(decodedJson);

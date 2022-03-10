@@ -14,16 +14,19 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
       case "getPlatformVersion":
         result("iOS " + UIDevice.current.systemVersion)
       case "login":
-        let clientId = (call.arguments as! [String: String])["clientId"]
-        let domain = (call.arguments as! [String: String])["domain"]
-        let scope = (call.arguments as! [String: String])["scope"]
-        let audience = (call.arguments as! [String: String])["audience"]
-
-        login(flutterResult: result, clientId: clientId!, domain: domain!, scope: scope ?? "", audience: audience ?? "")
+        let args = call.arguments as! [String: Any]
+        let clientId = args["clientId"] as! String
+        let domain = args["domain"] as! String
+        let scope = args["scope"] as! String
+        let audience = args["audience"] as! String
+        let useEphemeral = args["useEphemeral"] as! Bool
+      
+        login(flutterResult: result, clientId: clientId, domain: domain, scope: scope, audience: audience, useEphemeral: useEphemeral)
       case "logout":
-        let clientId = (call.arguments as! [String: String])["clientId"]
-        let domain = (call.arguments as! [String: String])["domain"]
-        logout(flutterResult: result, clientId: clientId!, domain: domain!)
+        let args = call.arguments as! [String: Any]
+        let clientId = args["clientId"] as! String
+        let domain = args["domain"] as! String
+        logout(flutterResult: result, clientId: clientId, domain: domain)
       default:
           print("Method does not exist")
     }
@@ -39,8 +42,12 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
     var recoveryCode: String?
   }
   
-  public func login(flutterResult: @escaping FlutterResult, clientId: String, domain: String, scope: String, audience: String) {
-    Auth0.webAuth(clientId: clientId, domain: domain).scope(scope).audience(audience).useEphemeralSession().start {
+  public func login(flutterResult: @escaping FlutterResult, clientId: String, domain: String, scope: String, audience: String, useEphemeral: Bool = false) {
+    var auth = Auth0.webAuth(clientId: clientId, domain: domain).scope(scope).audience(audience)
+    if(useEphemeral)  {
+      auth = auth.useEphemeralSession()
+    }
+    auth.start {
       result in
       switch result {
       case .failure(let error):
@@ -62,14 +69,10 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
   }
   
   public func logout(flutterResult: @escaping FlutterResult, clientId: String, domain: String) {
-    do {
-      Auth0.webAuth(clientId: clientId, domain: domain)
-      .clearSession(federated: false) { result in
-        print(result)
-        flutterResult(result)
-      }
-    } catch {
-      flutterResult(nil)
+    Auth0.webAuth(clientId: clientId, domain: domain)
+    .clearSession(federated: false) { result in
+      print(result)
+      flutterResult(result)
     }
   }
 }
