@@ -51,7 +51,7 @@ public class SwiftFlutterAuth0ClientPlugin: NSObject, FlutterPlugin {
       result in
       switch result {
       case .failure(let error):
-        flutterResult(FlutterError(code: "LoginFailure", message: "Failure Logging In with Auth0", details: "User cancelled Logging In"))
+        flutterResult(FlutterError(code: "LoginFailure", message: "Failure Logging In with Auth0", details: error.localizedDescription))
       case .success(let credentials):
         do {
           let data = Auth0Credentials(

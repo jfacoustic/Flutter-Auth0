@@ -1,3 +1,6 @@
+## 0.1.2
+- Better error messages iOS
+
 ## 0.1.1
 - Handle login cancellation iOS
 
