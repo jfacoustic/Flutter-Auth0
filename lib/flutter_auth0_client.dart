@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 
@@ -15,12 +16,12 @@ class Auth0Credentials {
       this.idToken, this.scope, this.recoveryCode);
 
   Auth0Credentials.fromJSON(Map<String, dynamic> json)
-      : accessToken = json['accessToken'],
-        tokenType = json['tokenType'],
-        refreshToken = json['refreshToken'],
-        idToken = json['idToken'],
+      : accessToken = json['accessToken'] ?? json['access_token'],
+        tokenType = json['tokenType'] ?? json['token_type'],
+        refreshToken = json['refreshToken'] ?? json['refresh_token'],
+        idToken = json['idToken'] ?? json['id_token'],
         scope = json['scope'],
-        recoveryCode = json['recoveryCode'];
+        recoveryCode = json['recoveryCode'] ?? json['recovery_code'];
 }
 
 class FlutterAuth0Client {
@@ -30,22 +31,29 @@ class FlutterAuth0Client {
   final String domain;
   final String scope;
   final String audience;
+  final String? scheme;
   final bool useEphemeral;
 
-  FlutterAuth0Client(
-      {required this.clientId,
-      required this.domain,
-      this.scope = "",
-      this.audience = "",
-      this.useEphemeral = false});
+  FlutterAuth0Client({
+    required this.clientId,
+    required this.domain,
+    this.scheme,
+    this.scope = "",
+    this.audience = "",
+    this.useEphemeral = false,
+  });
 
   Future<Auth0Credentials> login() async {
+    if (Platform.isAndroid && scheme == null) {
+      throw Exception("Scheme is required on Android.");
+    }
     final rawJson = await _channel.invokeMethod('login', {
       "clientId": clientId,
       "domain": domain,
       "scope": scope,
       "audience": audience,
-      "useEphemeral": useEphemeral
+      "useEphemeral": useEphemeral,
+      "scheme": scheme
     });
     final decodedJson = jsonDecode(rawJson);
     return Auth0Credentials.fromJSON(decodedJson);

@@ -43,11 +43,12 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.flutter_auth0_example"
-        minSdkVersion flutter.minSdkVersion
+        applicationId "com.tch.patient"
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders += [auth0Domain: "@string/com_auth0_domain", auth0Scheme: "<your scheme>"]
     }
 
     buildTypes {

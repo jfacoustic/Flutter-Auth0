@@ -26,7 +26,29 @@ Unofficial Auth0 SDK for flutter.
 ```
 
 ### Android
-TODO
+main/res/values/strings.xml:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="com_auth0_client_id">
+    <your auth0 client id></string>
+<string name="com_auth0_domain">
+      <your auth0 domain></string>
+</resources>
+```
+
+build.gradle
+
+```groovy
+application {
+    defaultConfig {
+        manifestPlaceholders += [auth0Domain: "@string/com_auth0_domain", auth0Scheme: "<your scheme>"]
+    }
+}
+```
+
+Note, I recommend your scheme be your application's id, (com.example....).  It's required for Android.
 
 ### Web
 Add the following to index.html:
@@ -44,7 +66,8 @@ Note: Web only returns an access_token.
 final Auth0Credentials credentials = await FlutterAuth0.login(
     clientId: "{YOUR AUTH0 CLIENT ID}",
     domain: "{YOUR AUTH0 DOMAIN}",
-    scope: "{SCOPES}"
+    scope: "{SCOPES}",
+    scheme: "{SCHEME}" // required for android
 );
 ```
 

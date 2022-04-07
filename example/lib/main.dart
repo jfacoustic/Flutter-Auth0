@@ -27,7 +27,8 @@ class _MyAppState extends State<MyApp> {
     final client = FlutterAuth0Client(
         clientId: dotenv.env["AUTH0_CLIENT_ID"]!,
         domain: dotenv.env["AUTH0_DOMAIN"]!,
-        scope: "openid offline_access");
+        scope: "openid offline_access",
+        scheme: dotenv.env['AUTH0_SCHEME']);
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="com_auth0_client_id">
+    <your auth0 client id></string>
+<string name="com_auth0_domain">
+      <your auth0 domain></string>
+</resources>
