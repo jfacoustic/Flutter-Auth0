@@ -1,3 +1,6 @@
+## 0.2.0
+- Android login implementation
+
 ## 0.1.2
 - Better error messages iOS
 
