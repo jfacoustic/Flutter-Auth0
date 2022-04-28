@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class Auth0Credentials {
@@ -44,7 +45,7 @@ class FlutterAuth0Client {
   });
 
   Future<Auth0Credentials> login() async {
-    if (Platform.isAndroid && scheme == null) {
+    if (!kIsWeb && Platform.isAndroid && scheme == null) {
       throw Exception("Scheme is required on Android.");
     }
     final rawJson = await _channel.invokeMethod('login', {
