@@ -59,7 +59,7 @@ class FlutterAuth0ClientWeb {
           scope: args['scope'], audience: args['audience']);
     }
     final token = await client.getTokenSilently(
-        detailedResponse: true, audience: args['audience']);
+        detailedResponse: args['detailedResponse'], audience: args['audience']);
     Map<String, dynamic> tokenMap = {
       'accessToken': token.accessToken,
       'idToken': token.idToken,
@@ -67,4 +67,6 @@ class FlutterAuth0ClientWeb {
     };
     return jsonEncode(tokenMap);
   }
+
+
 }
