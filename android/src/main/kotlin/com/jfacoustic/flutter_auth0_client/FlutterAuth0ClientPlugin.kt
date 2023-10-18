@@ -73,7 +73,7 @@ class FlutterAuth0ClientPlugin() : FlutterPlugin, MethodCallHandler, ActivityAwa
       loginMethod.start(this.activity!!, object : Callback<Credentials, AuthenticationException> {
         // Called when there is an authentication failure
         override fun onFailure(exception: AuthenticationException) {
-          result.error("AuthenticationException", exception.message, activity)
+          result.error("AuthenticationException", exception.message, null)
         }
 
         // Called when authentication completed successfully
@@ -94,7 +94,7 @@ class FlutterAuth0ClientPlugin() : FlutterPlugin, MethodCallHandler, ActivityAwa
         }
       })
     } catch (e: Exception) {
-      result.error("AuthenticationException", e.message, activity)
+      result.error("AuthenticationException", e.message, null)
     }
   }
 
